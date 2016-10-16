@@ -25,7 +25,7 @@ public class BoardMovement : MonoBehaviour {
 
         // For mobile devices
         float x = Input.acceleration.x;
-        float z = Input.acceleration.z;
+        float z = Input.acceleration.y; // y-axis on phone equals the z-axis of the board
         transform.Rotate(new Vector3(x, 0, z));
 
 	}
