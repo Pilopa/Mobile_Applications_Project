@@ -9,12 +9,13 @@ public class TriggerScript : MonoBehaviour {
     /// <summary>
     /// Shows if marble is on the trigger
     /// </summary>
-    private bool isActivated;
+    private bool isActivated = false;
     private DoorScript doorScript;
 
 	// Use this for initialization
 	void Start () {
         doorScript = Door.GetComponent<DoorScript>();
+        Debug.Log("Start Trigger");
 	}
 	
 	// Update is called once per frame
@@ -26,8 +27,10 @@ public class TriggerScript : MonoBehaviour {
         }
         else
         {
+            /*
             if (Vector3.Distance(Door.transform.position, doorScript.StartPosition) >= 0.1)
                 Door.transform.position = Door.transform.position + doorScript.MovingDirection * doorScript.Speed * Time.deltaTime;
+            */
         }
     }
 
@@ -36,6 +39,7 @@ public class TriggerScript : MonoBehaviour {
         if(col.gameObject.tag == "Marble")
         {
             isActivated = true;
+            Debug.Log("Enter");
         }
     }
 
@@ -44,6 +48,7 @@ public class TriggerScript : MonoBehaviour {
         if (col.gameObject.tag == "Marble")
         {
             isActivated = false;
+            Debug.Log("Exit");
         }
     }
 }

@@ -17,6 +17,7 @@ public class DoorScript : MonoBehaviour {
         Speed = 1;
         MovingDistance = 1;
         StartPosition = transform.position;
+        Debug.Log("Start");
 	}
 	
 	// Update is called once per frame
