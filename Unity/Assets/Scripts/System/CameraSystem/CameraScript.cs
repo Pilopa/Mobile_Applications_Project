@@ -17,17 +17,22 @@ public class CameraScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Vector3 pos = Vector3.zero;
+        Vector3 posC = Vector3.zero;
+        float cameraDistance = 15;
         if (MarbleCount == 1)
         {
-            pos = marbles[0].transform.position;
-        }else
+            
+        }else if(MarbleCount == 2)
         {
-
+            Vector3 pos1 = marbles[0].transform.position;
+            Vector3 pos2 = marbles[1].transform.position;
+            posC = ((pos1 - pos2) / 2) + pos2; // Calculation of the center of the line connecting both marbles
+            // TODO : cameraDstance need to be changed when marbles get to far away.
+            
         }
         Vector3 up = board.transform.up.normalized;
-        transform.position = pos + (up * 15);
+        transform.position = posC + (up * cameraDistance);
 
-        // TODO: Camera behavior with more than 1 marble
+        // TODO : Camera behavior with more than 2 marbles
     }
 }

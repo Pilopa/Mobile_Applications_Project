@@ -403,7 +403,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000014033755580, guid: 63754902d6c6e534b8c9f56df5af1c0c, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4000014033755580, guid: 63754902d6c6e534b8c9f56df5af1c0c, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3003,7 +3003,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000014033755580, guid: 63754902d6c6e534b8c9f56df5af1c0c, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4000014033755580, guid: 63754902d6c6e534b8c9f56df5af1c0c, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3095,6 +3095,47 @@ Transform:
   m_PrefabParentObject: {fileID: 4000010611592304, guid: a5ffccf91ae04774284f6f855e488a23,
     type: 2}
   m_PrefabInternal: {fileID: 2033812643}
+--- !u!1 &2036956889
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 2036956890}
+  - 65: {fileID: 2036956891}
+  m_Layer: 0
+  m_Name: TopCover
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2036956890
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2036956889}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 2051102285}
+  m_RootOrder: 50
+--- !u!65 &2036956891
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2036956889}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2051102280
 GameObject:
   m_ObjectHideFlags: 0
@@ -3239,6 +3280,7 @@ Transform:
   - {fileID: 628701087}
   - {fileID: 1576169281}
   - {fileID: 1205745794}
+  - {fileID: 2036956890}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!114 &2051102286
