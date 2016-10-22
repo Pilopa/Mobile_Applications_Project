@@ -29,7 +29,7 @@ public class DoorScript : MonoBehaviour, ITriggerable {
             // Getting the direction in which the door is moved
             Vector3 direction = Vector3.Normalize(Destination.transform.position - transform.position);
             // Door opens
-            if (Vector3.Distance(transform.position, Destination.transform.position) >= 0.1)
+            if (Vector3.Distance(transform.position, Destination.transform.position) >= 0.01)
             {
                 transform.position = transform.position + direction * Speed * Time.deltaTime;
             }
@@ -39,7 +39,7 @@ public class DoorScript : MonoBehaviour, ITriggerable {
             // Getting the direction in which the door is moved
             Vector3 direction = Vector3.Normalize(StartPosition.transform.position - transform.position);
             //Door closes
-            if (Vector3.Distance(transform.position, StartPosition.transform.position) >= 0.1)
+            if (Vector3.Distance(transform.position, StartPosition.transform.position) >= 0.01)
             {
                 transform.position = transform.position + direction * Speed * Time.deltaTime;
             }
