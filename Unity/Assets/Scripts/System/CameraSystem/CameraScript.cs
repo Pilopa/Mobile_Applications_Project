@@ -17,14 +17,17 @@ public class CameraScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        // Camera follows the marble with static distance
+        Vector3 pos = Vector3.zero;
         if (MarbleCount == 1)
         {
-            Vector3 marblePos = marbles[0].transform.position;
-            Vector3 up = board.transform.up.normalized;
-            transform.position = marblePos + (up * 15);
+            pos = marbles[0].transform.position;
+        }else
+        {
+
         }
-        
+        Vector3 up = board.transform.up.normalized;
+        transform.position = pos + (up * 15);
+
         // TODO: Camera behavior with more than 1 marble
     }
 }
