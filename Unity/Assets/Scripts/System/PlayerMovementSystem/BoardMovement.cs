@@ -11,6 +11,7 @@ public class BoardMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         // For Editor use
+		#if (UNITY_EDITOR)
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -24,9 +25,10 @@ public class BoardMovement : MonoBehaviour {
         }
 
         // For mobile devices
+		#elif (UNITY_ANDROID)
         float x = Input.acceleration.x;
         float z = Input.acceleration.y; // y-axis on phone equals the z-axis of the board
         transform.Rotate(new Vector3(x, 0, z));
-
+		#endif
 	}
 }
