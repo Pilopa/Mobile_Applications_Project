@@ -24,8 +24,9 @@ public class BoardMovement : MonoBehaviour {
         }
 
         // For mobile devices
-        float x = Input.acceleration.x;
-        float z = Input.acceleration.y; // y-axis on phone equals the z-axis of the board
+        float x = Mathf.Clamp((Input.acceleration.x * 1f / 3f), -30f, 30f); // so that 90 deg of mobile rotation equals 30 deg of board rotation and can't get higher than 30.
+        float z = Mathf.Clamp(Input.acceleration.y * 1f / 3f, -30f, 30f); // y-axis on phone equals the z-axis of the board
+
         transform.Rotate(new Vector3(x, 0, z));
 
 	}
