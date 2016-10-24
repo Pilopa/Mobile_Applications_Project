@@ -18,7 +18,7 @@ public class CameraScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Vector3 posC = Vector3.zero;
-        float cameraDistance = 15;
+        float cameraDistance = 20.0f;
         if (MarbleCount == 1)
         {
             
