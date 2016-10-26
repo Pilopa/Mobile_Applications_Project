@@ -32,35 +32,36 @@ public class MarbleMovement : MonoBehaviour {
         Vector3 gyroRot = Input.gyro.attitude.eulerAngles;
         Vector3 rot = gyroRot - initialOrientation;
 
-        if (rot.x > 330 && rot.x < 358)
+        if (rot.x > 180 && rot.x < 360)
         {
             if (rb.velocity.x <= maxVeloctiy)
-                rb.velocity = rb.velocity + new Vector3(0, 0, rot.x / 100);
+                rb.velocity = rb.velocity + new Vector3(0, 0, (360 - rot.x) / 100);
         }
-        if (rot.x > 2 && rot.x < 30)
+        if (rot.x > 0 && rot.x < 180)
         {
             if (rb.velocity.x >= (- maxVeloctiy))
                 rb.velocity = rb.velocity + new Vector3(0, 0, - (rot.x / 100));
         }
 
-        if (rot.y > 330 && rot.y < 358)
+        if (rot.y > 180 && rot.y < 358)
         {
             if (rb.velocity.y <= maxVeloctiy)
-                rb.velocity = rb.velocity + new Vector3(-(rot.x / 100), 0, 0);
+                rb.velocity = rb.velocity + new Vector3(-((360 - rot.y) / 100), 0, 0);
         }
-        if (rot.y > 2 && rot.y < 30)
+        if (rot.y > 2 && rot.y < 180)
         {
             if (rb.velocity.y >= (- maxVeloctiy))
-                rb.velocity = rb.velocity + new Vector3(rot.x /100, 0, 0);
+                rb.velocity = rb.velocity + new Vector3(rot.y /100, 0, 0);
         }
 
     }
 
-    void OnGUI()
-    {
-        GUI.TextField(new Rect(0, 0, 500, 100), deviceRotation.ToString());
-        GUI.TextField(new Rect(0, 150, 500, 100), initialOrientation.ToString());
-        GUI.TextField(new Rect(0, 300, 500, 100), transform.position.ToString());
-        GUI.TextField(new Rect(0, 400, 500, 100), Input.gyro.attitude.eulerAngles.ToString());
-    }
+    // for debugging purpose
+    //void OnGUI()
+    //{
+    //    GUI.TextField(new Rect(0, 0, 500, 100), deviceRotation.ToString());
+    //    GUI.TextField(new Rect(0, 150, 500, 100), initialOrientation.ToString());
+    //    GUI.TextField(new Rect(0, 300, 500, 100), transform.position.ToString());
+    //    GUI.TextField(new Rect(0, 400, 500, 100), Input.gyro.attitude.eulerAngles.ToString());
+    //}
 }
