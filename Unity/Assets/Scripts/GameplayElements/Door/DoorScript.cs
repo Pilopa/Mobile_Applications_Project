@@ -49,17 +49,11 @@ public class DoorScript : MonoBehaviour, ITriggerable {
 
     public void TriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Marble")
-        {
-            IsTriggered = true;
-        }
+        IsTriggered = true;
     }
 
     public void TriggerExit(Collider col)
     {
-        if (col.gameObject.tag == "Marble")
-        {
-            IsTriggered = false;
-        }
+        IsTriggered = false;
     }
 }
