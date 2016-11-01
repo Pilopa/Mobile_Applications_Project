@@ -1,15 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class EventListener : MonoBehaviour {
 
 	public GameObject mainMenu, startMenu, optionsMenu;
 
 
+	private AudioSource soundSource;
+	private Sound sound;
+
+
+
 	// Use this for initialization
 	void Start () {
-	
+		soundSource = GameObject.Find ("Sound").GetComponent<AudioSource> ();
+		sound = GameObject.Find ("Sound").GetComponent<Sound> ();
 	}
 	
 	// Update is called once per frame
@@ -17,13 +25,21 @@ public class EventListener : MonoBehaviour {
 	
 	}
 
+	void playSound(AudioClip sound)
+	{
+		soundSource.PlayOneShot (sound);
+	}
+
+
 	public void StartGame()
 	{		
+		playSound (sound.button_click);
 		SceneManager.LoadScene ("prototyp");
 	}
 
 	public void EnableMainMenu()
 	{
+		playSound (sound.button_click);
 		this.mainMenu.SetActive (true);
 
 		if (this.optionsMenu.activeSelf)
@@ -38,15 +54,23 @@ public class EventListener : MonoBehaviour {
 
 	public void EnableStartMenu()
 	{
+		playSound (sound.button_click);
 		this.startMenu.SetActive (true);
 		this.mainMenu.SetActive (false);
 	}
 
 	public void EnableOptionsMenu()
 	{
+		playSound (sound.button_click);
 		this.optionsMenu.SetActive (true);
 		this.mainMenu.SetActive (false);
 	}
+
+
+
+
+
+
 
 
 
