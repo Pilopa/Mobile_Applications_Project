@@ -3,12 +3,12 @@ using System.Collections;
 
 public class FinishScript : MonoBehaviour {
     private GameObject[] marbles;
-    private Collider collider;
+    private Collider col;
     private bool finished = false;
     // Use this for initialization
     void Start () {
         marbles = GameObject.FindGameObjectsWithTag("Marble");
-        collider = GetComponent<Collider>();
+        col = GetComponent<Collider>();
     }
 	
 	// Update is called once per frame
@@ -16,7 +16,7 @@ public class FinishScript : MonoBehaviour {
         bool allAtFinish = true;
         for (int i=0; i< marbles.Length; i++)
         {
-            if (!collider.bounds.Contains(marbles[i].transform.position))
+            if (!col.bounds.Contains(marbles[i].transform.position))
                 allAtFinish = false;   
         }
         if (allAtFinish)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Assets.Scripts.GameplayElements;
 
 public class TriggerScript : MonoBehaviour {
@@ -14,21 +15,35 @@ public class TriggerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        triggeredScript = TriggeredObject.GetComponent<ITriggerable>();
-	}
+        try
+        {
+            triggeredScript = TriggeredObject.GetComponent<ITriggerable>();
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            Debug.Log("TriggeredObject is no ITriggerable");
+        }
+    }
 	
 	// Update is called once per frame
 	void Update (){ }
 
     void OnTriggerEnter(Collider col)
     {
-        isActivated = true;
-        triggeredScript.TriggerEnter(col);
+        if (col.gameObject.tag == "Marble")
+        {
+            isActivated = true;
+            triggeredScript.TriggerEnter(col);
+        }
     }
 
     void OnTriggerExit(Collider col)
     {
-        isActivated = true;
-        triggeredScript.TriggerExit(col);
+        if (col.gameObject.tag == "Marble")
+        {
+            isActivated = true;
+            triggeredScript.TriggerExit(col);
+        }
     }
 }
