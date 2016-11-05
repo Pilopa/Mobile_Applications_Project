@@ -31,13 +31,19 @@ public class EventListener : MonoBehaviour {
 	}
 
 
-	public void StartGame()
+	public void StartLevel01()
 	{		
 		playSound (sound.button_click);
-		SceneManager.LoadScene ("prototyp");
+		SceneManager.LoadScene (1);
 	}
 
-	public void EnableMainMenu()
+    public void StartLevel02()
+    {
+        playSound(sound.button_click);
+        SceneManager.LoadScene(2);
+    }
+
+    public void EnableMainMenu()
 	{
 		playSound (sound.button_click);
 		this.mainMenu.SetActive (true);

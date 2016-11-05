@@ -6,17 +6,19 @@ public class DoorScript : MonoBehaviour, ITriggerable {
     public float Speed; //{ get; set; }
     public bool IsTriggered { get; private set; }
     /// <summary>
-    /// Defines the original position of the door, so it can move back there.
-    /// </summary>
-    public GameObject StartPosition;
-    /// <summary>
     /// Defines the destination of the opening translation.
     /// </summary>
     public GameObject Destination;
 
-	// Use this for initialization
-	void Start ()
+    /// <summary>
+    /// Defines the original position of the door, so it can move back there.
+    /// </summary>
+    private Vector3 startPosition;
+
+    // Use this for initialization
+    void Start ()
     {
+        startPosition = transform.position;
         IsTriggered = false;
 	}
 	
@@ -37,9 +39,9 @@ public class DoorScript : MonoBehaviour, ITriggerable {
         else
         {
             // Getting the direction in which the door is moved
-            Vector3 direction = Vector3.Normalize(StartPosition.transform.position - transform.position);
+            Vector3 direction = Vector3.Normalize(startPosition - transform.position);
             //Door closes
-            if (Vector3.Distance(transform.position, StartPosition.transform.position) >= 0.01)
+            if (Vector3.Distance(transform.position, startPosition) >= 0.01)
             {
                 transform.position = transform.position + direction * Speed * Time.deltaTime;
             }
