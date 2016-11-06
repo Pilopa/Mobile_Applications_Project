@@ -2,13 +2,14 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HUD_Class : MonoBehaviour {
 
-	public static bool pause = false;
+	public static bool pause;
 
-	public GameObject hud;
-	public Text scoreText, timeText;
+	public GameObject hud, pauseMenu;
+	public Text scoreText, timeText, pauseScoreText, pauseTimeText;
 
 	private float score, time = 0;
 	private int multiplier = 10, minutes = 0, seconds = 0;
@@ -20,6 +21,7 @@ public class HUD_Class : MonoBehaviour {
 		score = 5000;
 		scoreText.text = score.ToString();
 		timeText.text = minutes + ":" + seconds;
+		pause = false;
 	}
 	
 	// Update is called once per frame
@@ -33,9 +35,11 @@ public class HUD_Class : MonoBehaviour {
 
 	private void SetScore(float newScore)
 	{
-		score -= newScore;
-		score = (int)score;
-		scoreText.text = score.ToString();
+		if (score >= 0) {
+			score -= newScore;
+			score = (int)score;
+			scoreText.text = score.ToString ();
+		}
 	}
 
 	private void SetTime()
@@ -59,17 +63,28 @@ public class HUD_Class : MonoBehaviour {
 		}
 	}
 
-	public void PauseGame(){
+	public void PauseAndResumeGame(){
 		pause = !pause;
 
 		if (pause) {
 			Time.timeScale = 0;
-
+			pauseScoreText.text = "Score: " + scoreText.text;
+			pauseTimeText.text = "Time: " + timeText.text;
+			pauseMenu.SetActive (true);
+			hud.SetActive (false);
 		} else {
 			Time.timeScale = 1;
-
+			pauseMenu.SetActive (false);
+			hud.SetActive (true);
 		}
+	}
 
+	public void RestartGame(){
+		SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
+		Time.timeScale = 1;	
+	}
 
+	public void QuitGame(){
+		SceneManager.LoadScene (0);
 	}
 }
