@@ -40,6 +40,6 @@ public class CameraScript : MonoBehaviour {
             sum += marbles[i].transform.position;
         }
         sum = sum / marbles.Length;
-        transform.position = new Vector3(sum.x, 15, sum.z);
+        transform.position = new Vector3(sum.x, 20, sum.z);
     }
 }

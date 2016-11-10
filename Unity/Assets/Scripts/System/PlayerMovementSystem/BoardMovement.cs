@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
+/// <summary>
+/// Deprecated movement script. Using MarbleMovement
+/// </summary>
 public class BoardMovement : MonoBehaviour {
 
 	// Use this for initialization
