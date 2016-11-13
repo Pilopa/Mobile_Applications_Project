@@ -1,10 +1,32 @@
 <?php
 // Routes
 
-$app->get('/[{name}]', function ($request, $response, $args) {
-    // Sample log message
-    $this->logger->info("Slim-Skeleton '/' route");
+$app->post('/register', function ($request, $response, $args) {
 
-    // Render index view
-    return $this->renderer->render($response, 'index.phtml', $args);
+	
+	return $response;
+});
+
+$app->post('/login', function ($request, $response, $args) {
+
+	
+	return $response;
+});
+
+$app->post('/logout', function ($request, $response, $args) {
+
+	
+	return $response;
+});
+
+$app->get('/highscore/{id}', function ($request, $response, $args) {
+
+	
+	return $response;
+});
+
+$app->post('/highscore/{id}', function ($request, $response, $args) {
+
+	
+	return $response;
 });
