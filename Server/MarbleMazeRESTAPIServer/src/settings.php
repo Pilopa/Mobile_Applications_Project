@@ -8,7 +8,7 @@ return [
 			'host' => "localhost",
 			'user' => "root",
 			'password' => "1337",
-			'dbname' => "MarbleMaze"
+			'dbname' => "marblemaze"
 		],
 
         // Renderer settings

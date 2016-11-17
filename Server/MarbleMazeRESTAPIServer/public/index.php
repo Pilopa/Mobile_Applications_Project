@@ -12,7 +12,7 @@ if (PHP_SAPI == 'cli-server') {
 require __DIR__ . '/../vendor/autoload.php';
 
 spl_autoload_register(function ($classname) {
-    require ("../classes/" . $classname . ".php");
+    require ("../classes/" . str_replace("\\", "/", $classname) . ".class.php");
 });
 
 session_start();
@@ -36,10 +36,20 @@ $container['logger'] = function($c) {
 $container['db'] = function ($c) {
     $db = $c['settings']['db'];
     $pdo = new PDO("mysql:host=" . $db['host'] . ";dbname=" . $db['dbname'],
-        $db['user'], $db['pass']);
+        $db['user'], $db['password']);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     return $pdo;
+};
+
+// Add error handler
+$container['errorHandler'] = function ($container) {
+    return function ($request, $response, $exception) use ($container) {
+        return $container['response']
+							->withStatus($exception->getCode() <= 0 || $exception->getCode() >= 600 ? 500 : $exception->getCode())
+                             ->withHeader('Content-Type', 'text/html')
+                             ->write($exception->getMessage());
+    };
 };
 
 // Set up dependencies
