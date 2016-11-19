@@ -56,9 +56,20 @@ public class MarbleMovement : MonoBehaviour
             ui.RestartGame();
             return;
         }
+        float moveHorizontal = 0.0f;
+        float moveVertical = 0.0f;
 
-        float moveHorizontal = Input.acceleration.x;
-        float moveVertical = Input.acceleration.y;
+        // mobile
+#if UNITY_ANDROID
+        moveHorizontal = Input.acceleration.x;
+        moveVertical = Input.acceleration.y;
+#endif
+        //editor
+#if UNITY_EDITOR
+        moveHorizontal = Input.GetAxis("Horizontal");
+        moveVertical = Input.GetAxis("Vertical");
+#endif
+
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
         rb.AddForce(movement * maxVeloctiy * 2);
     }
