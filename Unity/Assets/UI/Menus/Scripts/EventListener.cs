@@ -71,13 +71,4 @@ public class EventListener : MonoBehaviour {
 		this.optionsMenu.SetActive (true);
 		this.mainMenu.SetActive (false);
 	}
-
-
-
-
-
-
-
-
-
 }

@@ -2759,12 +2759,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 223000013401634836, guid: 0a907f9b432d7c547813ea5a81bdb388,
+    - target: {fileID: 223000010269592158, guid: 0a907f9b432d7c547813ea5a81bdb388,
         type: 2}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 15865109}
-    - target: {fileID: 223000010269592158, guid: 0a907f9b432d7c547813ea5a81bdb388,
+    - target: {fileID: 223000013401634836, guid: 0a907f9b432d7c547813ea5a81bdb388,
         type: 2}
       propertyPath: m_Camera
       value: 
@@ -3094,6 +3094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbb16028b9edc645a81e403b5d1ea4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxVeloctiy: 5
 --- !u!1001 &1467072102
 Prefab:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ public class HUD_Class : MonoBehaviour {
 
 	private float score, time = 0;
 	private int multiplier = 10, minutes = 0, seconds = 0;
+	private Ad_Manager ads;
 
 
 	// Use this for initialization
@@ -22,6 +23,7 @@ public class HUD_Class : MonoBehaviour {
 		scoreText.text = score.ToString();
 		timeText.text = minutes + ":" + seconds;
 		pause = false;
+		ads = GameObject.Find ("Ad_Manager").GetComponent<Ad_Manager> ();
 	}
 	
 	// Update is called once per frame
@@ -85,6 +87,7 @@ public class HUD_Class : MonoBehaviour {
 	}
 
 	public void QuitGame(){
+		ads.ShowAd ();
 		SceneManager.LoadScene (0);
 	}
 }
