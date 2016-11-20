@@ -12,6 +12,10 @@ class AuthenticationMiddleware {
 
 	public function __invoke($request, $response, $next)
     {
+		///////////////////////////////////
+		//// Before routing ////
+		//////////////////////////////////
+		
 		$resource = $request->getUri()->getPath();
 		
 		// Check if the requested resource requires authentication
@@ -40,16 +44,45 @@ class AuthenticationMiddleware {
 						
 						if ($user) {
 						
-							if ($user['authToken'] != $bearer. ":" . $token) {
-					
-								throw new \App\Exception\AuthException(json_encode(array(
-									"errorMesage" => "AuthToken incorrect.",
-									"data" => array(
-										"expected" => $user['authToken'],
-										"provided" => $token
-									)
-								)));
+							if ($user['authToken'] != NULL) {
 							
+								if ($user['authToken'] != $bearer. ":" . $token) {
+						
+									throw new \App\Exception\AuthException(json_encode(array(
+										"errorMesage" => "AuthToken incorrect.",
+										"data" => array(
+											"expected" => $user['authToken'],
+											"provided" => $token
+										)
+									)));
+								
+								} else {
+								
+									// Check time of last request
+									if (time() - strtotime($user["lastRequestTimestamp"]) < $this->container['settings']['authTokenTimeout']) {
+									
+										// Save values for other middleware to use
+										$this->container['auth'] = array(
+											"token" => $token,
+											"bearer" => $bearer
+										);
+										
+										$this->container['logger'] ->debug("authValues stored");
+										
+									} else {
+									
+										// Delete auth token from database
+										if (!$this->container['db']->prepare("UPDATE user SET authToken=? where idUser=?")->execute([null, $bearer])) {
+											$this->container['logger'] ->error("Logout due to inactivity could not be executed due to a database error for user with id = " . $bearer);
+										}
+									
+										throw new \App\Exception\AuthException("The last successful request has been too long ago.");
+										
+									}
+									
+								}
+							} else {
+								throw new \App\Exception\AuthException("User is not logged in.");
 							}
 							
 						} else {
@@ -71,8 +104,17 @@ class AuthenticationMiddleware {
 			}
 			
 		}
+		
+		// Continue Middleware chain and do routing
+		$response = $next($request, $response);
+		
+		///////////////////////////////////
+		//// After routing	   ////
+		//////////////////////////////////
+		
+		// Do nothing here
 
-        return $next($request, $response);
+        return $response;
     }
 
 }

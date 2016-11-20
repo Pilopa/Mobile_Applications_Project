@@ -45,10 +45,13 @@ $container['db'] = function ($c) {
 // Add error handler
 $container['errorHandler'] = function ($container) {
     return function ($request, $response, $exception) use ($container) {
+		$container['logger'] ->debug("(" . $exception->getCode() . ") " . $exception->getMessage());
+		$code = $exception->getCode() <= 0 || $exception->getCode() >= 600 ? 500 : $exception->getCode();
         return $container['response']
-							->withStatus($exception->getCode() <= 0 || $exception->getCode() >= 600 ? 500 : $exception->getCode())
-                             ->withHeader('Content-Type', 'text/html')
-                             ->write($exception->getMessage());
+							->withJson(array(
+								"errorCode" => $code,
+								"errorMessage" => $exception->getMessage()
+							), $code);
     };
 };
 
