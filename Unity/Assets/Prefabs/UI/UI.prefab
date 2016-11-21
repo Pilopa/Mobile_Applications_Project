@@ -1674,7 +1674,7 @@ MonoBehaviour:
   pauseScoreText: {fileID: 114000013623898196}
   pauseTimeText: {fileID: 114000010117273884}
   failScoreText: {fileID: 114000013091143404}
-  failTimeText: {fileID: 0}
+  failTimeText: {fileID: 114000012684105464}
   scoreText: {fileID: 114000014011650578}
   timeText: {fileID: 114000013153947806}
 --- !u!114 &114000012221736318
