@@ -3,11 +3,11 @@ using System.Collections;
 
 public class MarbleMovement : MonoBehaviour
 {
-    public float maxVeloctiy = 5.0f;
+    public float ForceMultiplier = 10.0f;
 
-    private Vector3 initialOrientation;
-    private Vector3 deviceRotation;
-    private Vector3 velocity;
+    //private Vector3 initialOrientation;
+    //private Vector3 deviceRotation;
+    //private Vector3 velocity;
     private Rigidbody rb;
     private HUD_Class ui;
 
@@ -17,7 +17,7 @@ public class MarbleMovement : MonoBehaviour
         Input.gyro.enabled = true;
         rb = GetComponent<Rigidbody>();
 
-        initialOrientation = Input.gyro.attitude.eulerAngles;
+        //initialOrientation = Input.gyro.attitude.eulerAngles;
 
         ui = (GameObject.FindGameObjectWithTag("UI")).GetComponent<HUD_Class>();
     }
@@ -71,6 +71,6 @@ public class MarbleMovement : MonoBehaviour
 #endif
 
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        rb.AddForce(movement * maxVeloctiy * 2);
+        rb.AddForce(movement * ForceMultiplier);
     }
 }
