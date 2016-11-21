@@ -3,11 +3,10 @@ using System.Collections;
 
 public class RubberWall : MonoBehaviour {
 
-	private int speed;
+	public int speed = 500;
 
 	// Use this for initialization
-	void Start () {
-		speed = 500;
+	void Start () {		
 		gameObject.GetComponent<Renderer> ().material.color = Color.magenta;
 	}	
 

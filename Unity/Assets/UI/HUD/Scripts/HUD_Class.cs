@@ -8,11 +8,12 @@ public class HUD_Class : MonoBehaviour {
 
 	public static bool pause;
 
-	public GameObject hud, pauseMenu;
-	public Text scoreText, timeText, pauseScoreText, pauseTimeText;
+	public GameObject hud, pauseMenu, failMenu, finishMenu;
+	public Text hudScoreText, hudTimeText, pauseScoreText, pauseTimeText, failScoreText, failTimeText, scoreText, timeText;
 
 	private float score, time = 0;
-	private int multiplier = 10, minutes = 0, seconds = 0;
+	private float multiplier = 10;
+	private int minutes = 0, seconds = 0;
 	private Ad_Manager ads;
 
 
@@ -20,8 +21,8 @@ public class HUD_Class : MonoBehaviour {
 	void Start () {
 		Time.timeScale = 1;
 		score = 5000;
-		scoreText.text = score.ToString();
-		timeText.text = minutes + ":" + seconds;
+		hudScoreText.text = score.ToString();
+		hudTimeText.text = minutes + ":" + seconds;
 		pause = false;
 		ads = GameObject.Find ("Ad_Manager").GetComponent<Ad_Manager> ();
 	}
@@ -40,7 +41,7 @@ public class HUD_Class : MonoBehaviour {
 		if (score >= 0) {
 			score -= newScore;
 			score = (int)score;
-			scoreText.text = score.ToString ();
+			hudScoreText.text = score.ToString ();
 		}
 	}
 
@@ -54,14 +55,14 @@ public class HUD_Class : MonoBehaviour {
 		}
 		if (minutes < 10) {
 			if (seconds < 10) {
-				timeText.text = "0" + minutes + ":0" + seconds;
+				hudTimeText.text = "0" + minutes + ":0" + seconds;
 			}else
-				timeText.text = "0" + minutes + ":" + seconds;
+				hudTimeText.text = "0" + minutes + ":" + seconds;
 		} else {
 			if (seconds < 10) {
-				timeText.text = minutes + ":0" + seconds;
+				hudTimeText.text = minutes + ":0" + seconds;
 			}else
-				timeText.text = minutes + ":" + seconds;
+				hudTimeText.text = minutes + ":" + seconds;
 		}
 	}
 
@@ -70,8 +71,8 @@ public class HUD_Class : MonoBehaviour {
 
 		if (pause) {
 			Time.timeScale = 0;
-			pauseScoreText.text = "Score: " + scoreText.text;
-			pauseTimeText.text = "Time: " + timeText.text;
+			pauseScoreText.text = "Score: " + hudScoreText.text;
+			pauseTimeText.text = "Time: " + hudTimeText.text;
 			pauseMenu.SetActive (true);
 			hud.SetActive (false);
 		} else {
@@ -84,10 +85,29 @@ public class HUD_Class : MonoBehaviour {
 	public void RestartGame(){
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
 		Time.timeScale = 1;	
+		pause = false;
 	}
 
 	public void QuitGame(){
 		ads.ShowAd ();
 		SceneManager.LoadScene (0);
+	}
+
+	public void Fail(){
+		pause = true;
+		Time.timeScale = 0;
+		failScoreText.text = "Score: " + hudScoreText.text;
+		failTimeText.text = "Time: " + hudTimeText.text;
+		failMenu.SetActive (true);
+		hud.SetActive (false);
+	}
+
+	public void Finish(){
+		pause = true;
+		Time.timeScale = 0;
+		scoreText.text = "Score: " + hudScoreText.text;
+		timeText.text = "Time: " + hudTimeText.text;
+		finishMenu.SetActive (true);
+		hud.SetActive (false);
 	}
 }

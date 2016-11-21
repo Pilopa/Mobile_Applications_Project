@@ -3,12 +3,11 @@ using System.Collections;
 
 public class DestroyWall : MonoBehaviour {
 
-	private float withstandingForce;
+	public float withstandingForce = 2;
 
 	// Use this for initialization
-	void Start () {		
-		withstandingForce = 4;
-		gameObject.GetComponent<Renderer> ().material.color = Color.grey;
+	void Start () {			
+		gameObject.GetComponent<Renderer> ().material.color = Color.yellow;
 	}
 	
 	// Update is called once per frame
