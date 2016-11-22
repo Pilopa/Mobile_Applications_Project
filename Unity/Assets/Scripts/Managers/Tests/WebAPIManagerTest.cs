@@ -33,5 +33,9 @@ public class WebAPIManagerTest : MonoBehaviour {
 
 		int getHighScoreResult = manager.GetHighscore (0);
 		Debug.Log ("GetHighscore(0): " + getHighScoreResult);
+
+		// Register
+		int registerResult = manager.Register("test", "1337");
+		Debug.Log ("Register: " + registerResult);
 	}
 }

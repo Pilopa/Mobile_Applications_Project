@@ -1,7 +1,5 @@
 <?php namespace App\Middleware;
 
-require '/../vendor/autoload.php';
-
 class RequestTimingMiddleware {
 
 	private $container;

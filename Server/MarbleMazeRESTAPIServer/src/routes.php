@@ -24,7 +24,7 @@ $app->post('/register', function ($request, $response, $args) use ($container) {
 						if ($user != FALSE) {
 							$response = $response->withJson(array(
 								"errorCode" => 400,
-								"errorMessage" => "There has been an internal database error or the username already taken"
+								"errorMessage" => "The username has already been taken"
 							), 400);
 						} else {
 						
