@@ -78,7 +78,50 @@ public class WebAPIManager : MonoBehaviour, IWebAPI {
 	#region IWebAPI implementation
 
 	public int Register(string username, string password) {
-		throw new System.NotImplementedException ();
+		try
+		{
+			// Create the data
+			string postData = "{" +
+				"\"username\" : \"" + username +
+				"\", \"password\" : \"" + password +
+				"\"}";
+			byte[] byteArray = Encoding.UTF8.GetBytes (postData);
+
+			// Create the request
+			HttpWebRequest request = WebRequest.Create(String.Format("{0}/register", serverBaseURL)) as HttpWebRequest;
+
+			// Define request parameters
+			request.Method = "POST";
+			request.ContentType = "application/json";
+			request.ContentLength = byteArray.Length;
+
+			// Get the request stream.
+			Stream dataStream = request.GetRequestStream ();
+
+			// Write the data to the request stream.
+			dataStream.Write (byteArray, 0, byteArray.Length);
+
+			// Close the Stream object.
+			dataStream.Close ();
+
+			// Get response
+			using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+			{
+				return (int) response.StatusCode;
+			}
+		}
+		catch (WebException e) {
+			using (var stream = e.Response.GetResponseStream ())
+			using (var reader = new StreamReader (stream)) {
+				Debug.LogError (reader.ReadToEnd ());
+			}
+			return -1;
+		}
+		catch (Exception e)
+		{
+			Debug.LogError (e.Source  + ": " + e.Message);
+			return -1;
+		}
 	}
 
 	public bool Login (string username, string password)
