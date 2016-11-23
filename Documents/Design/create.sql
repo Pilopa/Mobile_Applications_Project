@@ -15,8 +15,7 @@ CREATE TABLE IF NOT EXISTS `marblemaze`.`User` (
   `authToken` VARCHAR(255) NULL,
   `lastRequestTimestamp` DATETIME NULL,
   PRIMARY KEY (`idUser`),
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC))
-ENGINE = InnoDB;
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC));
 
 
 -- -----------------------------------------------------
@@ -26,8 +25,7 @@ DROP TABLE IF EXISTS `marblemaze`.`Level` ;
 
 CREATE TABLE IF NOT EXISTS `marblemaze`.`Level` (
   `idLevel` INT NOT NULL,
-  PRIMARY KEY (`idLevel`))
-ENGINE = InnoDB;
+  PRIMARY KEY (`idLevel`));
 
 
 -- -----------------------------------------------------
@@ -51,8 +49,7 @@ CREATE TABLE IF NOT EXISTS `marblemaze`.`Highscore` (
     FOREIGN KEY (`Level_idLevel`)
     REFERENCES `marblemaze`.`Level` (`idLevel`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
