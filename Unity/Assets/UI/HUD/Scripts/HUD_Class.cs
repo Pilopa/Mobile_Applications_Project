@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -9,12 +9,13 @@ public class HUD_Class : MonoBehaviour {
 	public static bool pause;
 
 	public GameObject hud, pauseMenu, failMenu, finishMenu;
-	public Text hudScoreText, hudTimeText, pauseScoreText, pauseTimeText, failScoreText, failTimeText, scoreText, timeText;
+	public Text hudScoreText, hudHighScoreText, hudTimeText, pauseScoreText, pauseTimeText, failScoreText, failTimeText, scoreText, timeText;
 
 	private float score, time = 0;
 	private float multiplier = 10;
 	private int minutes = 0, seconds = 0;
 	private Ad_Manager ads;
+    private WebAPIManager webMan;
 
 
 	// Use this for initialization
@@ -25,10 +26,17 @@ public class HUD_Class : MonoBehaviour {
 		hudTimeText.text = minutes + ":" + seconds;
 		pause = false;
 		ads = GameObject.Find ("Ad_Manager").GetComponent<Ad_Manager> ();
+        webMan = WebAPIManager.GetInstance();
+        webMan.Login("test", "1337");
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    void OnApplicationQuit()
+    {
+        webMan.Logout();
+    }
+
+    // Update is called once per frame
+    void Update () {
 		if (!pause) {
 			SetScore (Time.deltaTime * multiplier);
 			SetTime ();
@@ -73,6 +81,7 @@ public class HUD_Class : MonoBehaviour {
 			Time.timeScale = 0;
 			pauseScoreText.text = "Score: " + hudScoreText.text;
 			pauseTimeText.text = "Time: " + hudTimeText.text;
+            //webMan.
 			pauseMenu.SetActive (true);
 			hud.SetActive (false);
 		} else {
@@ -109,5 +118,9 @@ public class HUD_Class : MonoBehaviour {
 		timeText.text = "Time: " + hudTimeText.text;
 		finishMenu.SetActive (true);
 		hud.SetActive (false);
+        int score = Int32.Parse(hudScoreText.text);
+        webMan.PostHighscore(score, SceneManager.GetActiveScene().buildIndex - 1);
+        score = webMan.GetHighscore(SceneManager.GetActiveScene().buildIndex - 1);
+        hudHighScoreText.text = score.ToString();
 	}
 }

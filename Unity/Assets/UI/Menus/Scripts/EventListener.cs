@@ -12,8 +12,6 @@ public class EventListener : MonoBehaviour {
 	private AudioSource soundSource;
 	private Sound sound;
 
-
-
 	// Use this for initialization
 	void Start () {
 		soundSource = GameObject.Find ("Sound").GetComponent<AudioSource> ();

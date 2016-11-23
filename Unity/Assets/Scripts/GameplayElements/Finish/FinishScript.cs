@@ -17,6 +17,7 @@ public class FinishScript : MonoBehaviour {
 	void Update () {
         if (finished && !paused)
         {
+            ui.Finish();
             ui.PauseAndResumeGame();
             paused = true;
             return;
@@ -31,10 +32,4 @@ public class FinishScript : MonoBehaviour {
         if (allAtFinish)
             finished = true;
 	}
-
-    void OnGUI()
-    {
-        if (finished)
-            GUI.TextField(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 25, 100, 50), "Finish!");
-    }
 }

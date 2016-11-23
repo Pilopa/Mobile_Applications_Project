@@ -18,10 +18,12 @@ public class DestroyWall : MonoBehaviour {
 	void OnCollisionEnter(Collision other)
 	{
 		if (other.gameObject.tag == "Marble") {
-			if (other.impactForceSum.x * other.rigidbody.mass > withstandingForce
+#pragma warning disable 0618
+            if (other.impactForceSum.x * other.rigidbody.mass > withstandingForce
 				| other.impactForceSum.z * other.rigidbody.mass > withstandingForce)
-			{
-				this.GetComponent<Renderer> ().enabled = false;
+#pragma warning restore 0618
+            {
+                this.GetComponent<Renderer> ().enabled = false;
 				this.GetComponent<Collider> ().enabled = false;			
 			}
 		}

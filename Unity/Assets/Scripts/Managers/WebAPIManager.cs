@@ -53,26 +53,41 @@ public class WebAPIManager : MonoBehaviour, IWebAPI {
 
 	private AuthTokenWrapper authData = null;
 
-	/// <summary>
-	/// Gets the singleton instance of this manager.
-	/// </summary>
-	/// <value>The singleton instance.</value>
-	public WebAPIManager Instance {
-		get;
-		private set;
-	}
+    /// <summary>
+    /// Gets the singleton instance of this manager.
+    /// </summary>
+    /// <value>The singleton instance.</value>
+    //public static WebAPIManager Instance {
+    //	get
+    //       {
+    //           if (Instance == null)
+    //               Instance = new WebAPIManager();
+    //           return Instance;
+    //       }
+    //	private set
+    //       {
+    //           Instance = value;
+    //       }
+    //}
+    private static WebAPIManager instance;
+    public static WebAPIManager GetInstance()
+    {
+        if (instance == null)
+            instance = new WebAPIManager();
+        return instance;
+    }
 
 	/// <summary>
 	/// Sets the instance property on game start.
 	/// </summary>
 	public void Awake() {
-		if (Instance == null) {
-			Instance = this;
+		if (instance == null) {
+            instance = this;
 		}
 
 		// The web api instance is fine to be the same
 		// in all scenes.
-		DontDestroyOnLoad (Instance);
+		DontDestroyOnLoad (instance);
 	}
 
 	#region IWebAPI implementation
