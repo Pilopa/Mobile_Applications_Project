@@ -6,10 +6,10 @@ return [
 		'authTokenTimeout' => 120000, // Time in seconds before token comes inactive after a successful request
 		
 		'db' => [
-			'host' => "localhost",
-			'user' => "root",
-			'password' => "1337",
-			'dbname' => "marblemaze"
+			'host' => "mysql.hostinger.co.uk",
+			'user' => "u472008720_me",
+			'password' => "qwe123",
+			'dbname' => "u472008720_maze"
 		],
 
         // Renderer settings
