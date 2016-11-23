@@ -20,20 +20,14 @@ class AuthenticationMiddleware {
 		if (!in_array($resource, ['/login', '/register'])) {
 		
 			// Check if header contains auth header
-			$headers = apache_request_headers();
-			
-			if (array_key_exists("authorization", $headers)) {
-				
-				// Check for auth token in request header
-				$authHeader = $headers["authorization"];
+			if (isset($_SERVER['PHP_AUTH_USER'])) {
 				
 					// Retrieve Auth Values
-					$authValues = explode(":", base64_decode(explode(" ", $authHeader)[1]));
-					$bearer = $authValues[0];
-					$token = $authValues[1];
+					$bearer = $_SERVER['PHP_AUTH_USER'];
+					$token = $_SERVER['PHP_AUTH_PW'];
 					
 					// Retrieve Values from Database
-					$statement = $this->container['db'] ->prepare('SELECT * FROM user WHERE idUser = ?');
+					$statement = $this->container['db'] ->prepare('SELECT * FROM User WHERE idUser = ?');
 					
 					if ($statement) {
 					
@@ -70,7 +64,7 @@ class AuthenticationMiddleware {
 									} else {
 									
 										// Delete auth token from database
-										if (!$this->container['db']->prepare("UPDATE user SET authToken=? where idUser=?")->execute([null, $bearer])) {
+										if (!$this->container['db']->prepare("UPDATE User SET authToken=? where idUser=?")->execute([null, $bearer])) {
 											$this->container['logger'] ->error("Logout due to inactivity could not be executed due to a database error for user with id = " . $bearer);
 										}
 									

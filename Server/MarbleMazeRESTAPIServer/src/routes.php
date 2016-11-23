@@ -14,7 +14,7 @@ $app->post('/register', function ($request, $response, $args) use ($container) {
 				$password = $input['password'];
 				
 				// Check if username is already registered
-				$statement = $container['db'] ->prepare('SELECT * FROM user WHERE username = ?');
+				$statement = $container['db'] ->prepare('SELECT * FROM User WHERE username = ?');
 					
 					if ($statement) {
 					
@@ -41,7 +41,7 @@ $app->post('/register', function ($request, $response, $args) use ($container) {
 								), 500);
 							} else {
 								// Store user and return result
-								if ($container['db']->prepare("INSERT INTO user (username, passwordHash) VALUES (?, ?)")->execute([$username, $passwordHash])) {
+								if ($container['db']->prepare("INSERT INTO User (username, passwordHash) VALUES (?, ?)")->execute([$username, $passwordHash])) {
 									$id = $container['db']->lastInsertId();
 									
 									$response = $response->withJson(array(
@@ -100,7 +100,7 @@ $app->post('/login', function ($request, $response, $args) use ($container) {
 				$password = $input['password'];
 				
 				// Retrieve user from database
-				$statement = $container['db'] ->prepare('SELECT * FROM user WHERE username = ?');
+				$statement = $container['db'] ->prepare('SELECT * FROM User WHERE username = ?');
 					
 				if ($statement) {
 				
@@ -134,7 +134,7 @@ $app->post('/login', function ($request, $response, $args) use ($container) {
 								$authToken = $user['authToken'] != NULL ? $user['authToken'] : $userId . ":" . $authHash;
 				
 								// Attempt to store auth hash
-								if ($container['db']->prepare("UPDATE user SET authToken=? where idUser=?")->execute([$authToken, $userId])) {
+								if ($container['db']->prepare("UPDATE User SET authToken=? where idUser=?")->execute([$authToken, $userId])) {
 								
 									// Save values for middleware to use
 									$container['auth'] = array(
@@ -204,7 +204,7 @@ $app->post('/logout', function ($request, $response, $args) use ($container) {
 	if (isset($container["auth"]) && isset($container["auth"]["bearer"]) ) {
 	
 			// Delete auth token from database
-			if (!$container['db']->prepare("UPDATE user SET authToken=? where idUser=?")->execute([null, $container["auth"]["bearer"]])) {
+			if (!$container['db']->prepare("UPDATE User SET authToken=? where idUser=?")->execute([null, $container["auth"]["bearer"]])) {
 				$container['logger'] ->error("Logout due to inactivity could not be executed due to a database error for user with id = " . $container["auth"]["bearer"]);
 			}
 			
@@ -227,7 +227,7 @@ $app->get('/highscore/{id}', function ($request, $response, $args) use ($contain
 			if ($args["id"] == $bearer) {
 			
 				// Retrieve Values from Database
-				$statement = $container['db'] ->prepare('SELECT * FROM highscore WHERE User_idUser = ?');
+				$statement = $container['db'] ->prepare('SELECT * FROM Highscore WHERE User_idUser = ?');
 				
 				if ($statement->execute([$bearer])) {
 				
@@ -277,7 +277,7 @@ $app->get('/highscore/{id}/level/{levelIndex}', function ($request, $response, $
 			if ($args["id"] == $bearer) {
 			
 				// Retrieve Values from Database
-				$statement = $container['db'] ->prepare('SELECT * FROM highscore WHERE User_idUser = ? AND Level_idLevel = ?');
+				$statement = $container['db'] ->prepare('SELECT * FROM Highscore WHERE User_idUser = ? AND Level_idLevel = ?');
 				
 				if ($statement->execute([$bearer, $args["levelIndex"]])) {
 				
@@ -331,22 +331,24 @@ $app->post('/highscore/{id}/level/{levelIndex}', function ($request, $response, 
 						$newVal = intval($input['value']);
 						
 						// Check if highscore entry already exists in database
-						$statement = $container['db'] ->prepare('SELECT * FROM highscore WHERE User_idUser = ? AND Level_idLevel = ?');
+						$statement = $container['db'] ->prepare('SELECT * FROM Highscore WHERE User_idUser = ? AND Level_idLevel = ?');
 						
 						if ($statement->execute([$bearer, $args["levelIndex"]])) {
 						
 							if (($highscore = $statement->fetch()) != FALSE) {
 							
 									// Highscore entry exists: update it
-									if (!$container['db']->prepare("UPDATE highscore SET value=? WHERE User_idUser = ? AND Level_idLevel = ?")->execute([$newVal, $bearer, $args['levelIndex']])) {
+									if (!$container['db']->prepare("UPDATE Highscore SET value=? WHERE User_idUser = ? AND Level_idLevel = ?")->execute([$newVal, $bearer, $args['levelIndex']])) {
 										throw new \Exception("Database error.", 500);
 									}
 								
 							} else {
 							
 									// Highscore entry doesnt exist: insert it
-									if (!$container['db']->prepare("INSERT INTO highscore VALUES (?, ?, ?)")->execute([$bearer, $args['levelIndex'], $newVal])) {
+									if (!$container['db']->prepare("INSERT INTO Highscore VALUES (?, ?, ?)")->execute([$bearer, $args['levelIndex'], $newVal])) {
 										throw new \Exception("Database error.", 500);
+									} else {
+										$response = $response->withStatus(201);
 									}
 								
 							}

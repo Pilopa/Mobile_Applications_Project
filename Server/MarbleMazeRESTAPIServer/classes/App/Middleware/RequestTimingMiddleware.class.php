@@ -30,7 +30,7 @@ class RequestTimingMiddleware {
 			
 			// Attempt to update the time of last request
 			$timestamp = date("Y-m-d H:i:s", time());
-			if (!$this->container['db']->prepare("UPDATE user SET lastRequestTimestamp=? where idUser=?")->execute([$timestamp, $bearer])) {
+			if (!$this->container['db']->prepare("UPDATE User SET lastRequestTimestamp=? where idUser=?")->execute([$timestamp, $bearer])) {
 			
 				$this->container['logger'] ->warning("LastRequestTimestamp could not be updated for user with id = " . $bearer);
 				
