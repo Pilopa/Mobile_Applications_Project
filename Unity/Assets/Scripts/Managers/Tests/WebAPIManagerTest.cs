@@ -37,5 +37,9 @@ public class WebAPIManagerTest : MonoBehaviour {
 		// Register
 		int registerResult = manager.Register("test", "1337");
 		Debug.Log ("Register: " + registerResult);
+
+		// Ranking
+		bool rankingResult = manager.GetRanking(1, 0) != null;
+		Debug.Log ("Ranking: " + rankingResult);
 	}
 }

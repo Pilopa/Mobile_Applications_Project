@@ -5,7 +5,15 @@ using UnityEngine.Networking.Match;
 using System;
 using System.Text;
 using System.IO;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
+/// <summary>
+/// Implementation of the IWebAPI interface.
+/// Utilizes Json.Net to deserialize server data.
+/// </summary>
+/// <author>Konstantin Schaper</author>
+/// <seealso cref="http://www.netonsoft.com/json" />
 public class WebAPIManager : MonoBehaviour, IWebAPI {
 
 	#region Inner Classes
@@ -16,30 +24,6 @@ public class WebAPIManager : MonoBehaviour, IWebAPI {
 		public string authToken = null;
 		public string bearer = null;
 		public string token = null;
-	}
-
-	[Serializable]
-	public class HighscoreWrapper
-	{
-		public int highscore;
-	}
-
-	// Credit: http://answers.unity3d.com/questions/585997/monodevelop-401-copy-paste-issue.html
-	[Serializable]
-	public class JsonHelper
-	{
-		public static T[] getJsonArray<T>(string json)
-		{
-			string newJson = "{ \"array\": " + json + "}";
-			Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>> (newJson);
-			return wrapper.array;
-		}
-
-		[Serializable]
-		private class Wrapper<T>
-		{
-			public T[] array;
-		}
 	}
 
 	#endregion
@@ -258,8 +242,8 @@ public class WebAPIManager : MonoBehaviour, IWebAPI {
 				if ((int) response.StatusCode == 200) {
 					using (var streamReader = new StreamReader(response.GetResponseStream())) {
 						var responseBody = streamReader.ReadToEnd();
-						var highscoreData = JsonHelper.getJsonArray<int>(responseBody);
-						return highscoreData[levelIndex];
+						var highscoreData = JsonConvert.DeserializeObject<Dictionary<string, int>>(responseBody);
+						return highscoreData[Convert.ToString(levelIndex)];
 					}
 				} else return -(int)response.StatusCode;
 			}
@@ -326,6 +310,42 @@ public class WebAPIManager : MonoBehaviour, IWebAPI {
 		{
 			Debug.LogError (e.Message);
 			return -1;
+		}
+	}
+
+	public List<Dictionary<string, string>> GetRanking(int levelIndex, int maxCount) {
+		try
+		{
+			// Create the request
+			HttpWebRequest request = WebRequest.Create(String.Format("{0}/ranking/{1}" + (maxCount > 0 ? "?limit=" + maxCount : ""), serverBaseURL, levelIndex)) as HttpWebRequest;
+
+			// Define request parameters
+			request.Method = "GET";
+			request.ContentType = "application/json";
+			request.Headers.Add(HttpRequestHeader.Authorization, "Basic " + authData.authToken);
+
+			// Get response
+			using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+			{
+				if ((int) response.StatusCode == 200) {
+					using (var streamReader = new StreamReader(response.GetResponseStream())) {
+						var responseBody = streamReader.ReadToEnd();
+						return JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(responseBody);
+					}
+				} else return null;
+			}
+		}
+		catch (WebException e) {
+			using (var stream = e.Response.GetResponseStream ())
+			using (var reader = new StreamReader (stream)) {
+				Debug.LogError (reader.ReadToEnd ());
+			}
+			return null;
+		}
+		catch (Exception e)
+		{
+			Debug.LogError (e.Message);
+			return null;
 		}
 	}
 

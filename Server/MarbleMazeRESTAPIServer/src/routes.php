@@ -1,6 +1,8 @@
 <?php
-// Routes
+// Initialize Authentication Middleware
+$authMiddleware = new \App\Middleware\AuthenticationMiddleware($container);
 
+// Routes
 $app->post('/register', function ($request, $response, $args) use ($container) {
 
 	// Get Input and Check it
@@ -215,7 +217,7 @@ $app->post('/logout', function ($request, $response, $args) use ($container) {
 	}
 	
 	return $response;
-});
+})->add($authMiddleware);
 
 $app->get('/highscore/{id}', function ($request, $response, $args) use ($container) {
 
@@ -265,7 +267,7 @@ $app->get('/highscore/{id}', function ($request, $response, $args) use ($contain
 	}
 	
 	return $response;
-});
+})->add($authMiddleware);
 
 $app->get('/highscore/{id}/level/{levelIndex}', function ($request, $response, $args) use ($container) {
 
@@ -312,7 +314,7 @@ $app->get('/highscore/{id}/level/{levelIndex}', function ($request, $response, $
 	}
 	
 	return $response;
-});
+})->add($authMiddleware);
 
 $app->post('/highscore/{id}/level/{levelIndex}', function ($request, $response, $args) use ($container) {
 
@@ -337,9 +339,15 @@ $app->post('/highscore/{id}/level/{levelIndex}', function ($request, $response, 
 						
 							if (($highscore = $statement->fetch()) != FALSE) {
 							
-									// Highscore entry exists: update it
-									if (!$container['db']->prepare("UPDATE Highscore SET value=? WHERE User_idUser = ? AND Level_idLevel = ?")->execute([$newVal, $bearer, $args['levelIndex']])) {
-										throw new \Exception("Database error.", 500);
+									// Highscore entry exists: check if new value is higher and update if appropriate
+									if ($highscore['value'] < $newVal) {
+										if (!$container['db']->prepare("UPDATE Highscore SET value=? WHERE User_idUser = ? AND Level_idLevel = ?")->execute([$newVal, $bearer, $args['levelIndex']])) {
+											throw new \Exception("Database error.", 500);
+										} else {
+											$response = $response->withStatus(201);
+										}
+									} else {
+										throw new \Exception("New highscore value is not greater than the stored one.", 200);
 									}
 								
 							} else {
@@ -369,6 +377,43 @@ $app->post('/highscore/{id}/level/{levelIndex}', function ($request, $response, 
 		throw new \App\Exception\AuthException("User is not logged in. This error should never occur.");
 		
 	}
+	
+	return $response;
+})->add($authMiddleware);
+
+$app->get('/ranking/{levelIndex}', function ($request, $response, $args) use ($container) {
+	
+		// Retrieve Values from Database
+		// The following line does only work with MySQL Databases because of the "LIMIT" clause
+		$statement = $container['db'] ->prepare('SELECT username, value FROM Highscore, User WHERE User.idUser = Highscore.User_idUser AND Level_idLevel = ? ORDER BY value' . ($request->getParam('limit') != null ? "LIMIT " . $request->getParam('limit') : ""));
+		
+		if ($statement->execute([$args['levelIndex']])) {
+		
+			if (($highscores = $statement->fetchAll()) != FALSE) {
+			
+				$resultData = array();
+			
+				// Iterate through result set to fill result data
+				foreach ($highscores as $highscore) {
+					array_push($resultData, array(
+						"username" => $highscore['username'],
+						"value" => intval($highscore['value'])
+					));
+				}
+				
+				$response = $response->withJson($resultData);
+				
+			} else {
+			
+				throw new \Exception("Database error: result is empty", 500);
+				
+			}
+			
+		} else {
+			
+				throw new \Exception("Database error: Statement could not be executed", 500);
+				
+		}
 	
 	return $response;
 });

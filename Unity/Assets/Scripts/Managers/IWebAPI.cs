@@ -1,5 +1,11 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
+/// <summary>
+/// The main interface to marblemaze's backend database server. 
+/// This is purely the design and implementation may vary.
+/// </summary>
+/// <author>Konstantin Schaper</author>
 public interface IWebAPI {
 
 	/// <summary>
@@ -32,6 +38,14 @@ public interface IWebAPI {
 	/// </summary>
 	/// <returns>The positive highscore value or a negative value representing the HTTP error code.</returns>
 	int GetHighscore(int levelIndex);
+
+	/// <summary>
+	/// Gets a list of highscores ordered by value for the given level.
+	/// </summary>
+	/// <returns>The ordered list of highscores for that level or null, if an error occurred.</returns>
+	/// <param name="levelIndex">Level index.</param>
+	/// <param name="maxCount">The maximum number of records to retrieve.</param>
+	List<Dictionary<string, string>> GetRanking(int levelIndex, int maxCount);
 
 	/// <summary>
 	/// Attempts to post the given highscore for the given level to the server associated with this
