@@ -385,7 +385,7 @@ $app->get('/ranking/{levelIndex}', function ($request, $response, $args) use ($c
 	
 		// Retrieve Values from Database
 		// The following line does only work with MySQL Databases because of the "LIMIT" clause
-		$statement = $container['db'] ->prepare('SELECT username, value FROM Highscore, User WHERE User.idUser = Highscore.User_idUser AND Level_idLevel = ? ORDER BY value' . ($request->getParam('limit') != null ? "LIMIT " . $request->getParam('limit') : ""));
+		$statement = $container['db'] ->prepare('SELECT username, value FROM Highscore, User WHERE User.idUser = Highscore.User_idUser AND Level_idLevel = ? ORDER BY value' . ($request->getParam('limit') != null ? "LIMIT " . intval($request->getParam('limit')) : ""));
 		
 		if ($statement->execute([$args['levelIndex']])) {
 		

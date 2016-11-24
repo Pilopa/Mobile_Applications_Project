@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WebAPIManagerTest : MonoBehaviour {
 
@@ -39,7 +40,12 @@ public class WebAPIManagerTest : MonoBehaviour {
 		Debug.Log ("Register: " + registerResult);
 
 		// Ranking
-		bool rankingResult = manager.GetRanking(1, 0) != null;
+		var rankings = manager.GetRanking(1, 1);
+		bool rankingResult = rankings != null;
 		Debug.Log ("Ranking: " + rankingResult);
+		foreach (Dictionary<string, string> highscore in rankings) {
+			Debug.Log (highscore["username"] + ": " + highscore["value"]);
+		}
+
 	}
 }
