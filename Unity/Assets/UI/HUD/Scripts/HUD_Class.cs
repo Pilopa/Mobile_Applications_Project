@@ -15,6 +15,8 @@ public class HUD_Class : MonoBehaviour {
 	private float multiplier = 10;
 	private int minutes = 0, seconds = 0;
 	private Ad_Manager ads;
+
+    [SerializeField]
     private WebAPIManager webMan;
 
 
@@ -26,9 +28,11 @@ public class HUD_Class : MonoBehaviour {
 		hudTimeText.text = minutes + ":" + seconds;
 		pause = false;
 		ads = GameObject.Find ("Ad_Manager").GetComponent<Ad_Manager> ();
-        webMan = WebAPIManager.GetInstance();
-        webMan.Login("test", "1337");
-	}
+        webMan = WebAPIManager.Instance;
+        if (!webMan.Login("test", "1337")) {
+            Application.Quit();
+        }
+    }
 
     void OnApplicationQuit()
     {
@@ -119,8 +123,8 @@ public class HUD_Class : MonoBehaviour {
 		finishMenu.SetActive (true);
 		hud.SetActive (false);
         int score = Int32.Parse(hudScoreText.text);
-        webMan.PostHighscore(score, SceneManager.GetActiveScene().buildIndex - 1);
-        score = webMan.GetHighscore(SceneManager.GetActiveScene().buildIndex - 1);
+        webMan.PostHighscore(score, 0); //SceneManager.GetActiveScene().buildIndex - 1
+        score = webMan.GetHighscore(0); //SceneManager.GetActiveScene().buildIndex - 1
         hudHighScoreText.text = score.ToString();
 	}
 }

@@ -57,37 +57,33 @@ public class WebAPIManager : MonoBehaviour, IWebAPI {
     /// Gets the singleton instance of this manager.
     /// </summary>
     /// <value>The singleton instance.</value>
-    //public static WebAPIManager Instance {
-    //	get
-    //       {
-    //           if (Instance == null)
-    //               Instance = new WebAPIManager();
-    //           return Instance;
-    //       }
-    //	private set
-    //       {
-    //           Instance = value;
-    //       }
-    //}
-    private static WebAPIManager instance;
-    public static WebAPIManager GetInstance()
+    public static WebAPIManager Instance
     {
-        if (instance == null)
-            instance = new WebAPIManager();
-        return instance;
+        get;
+        private set;        
     }
+
+    //private static WebAPIManager instance;
+    //public static WebAPIManager GetInstance()
+    //{
+    //    if (instance == null)
+    //        instance = new WebAPIManager();
+    //    return instance;
+    //}
+
+    private WebAPIManager() { }
 
 	/// <summary>
 	/// Sets the instance property on game start.
 	/// </summary>
 	public void Awake() {
-		if (instance == null) {
-            instance = this;
+		if (Instance == null) {
+            Instance = this;
 		}
 
 		// The web api instance is fine to be the same
 		// in all scenes.
-		DontDestroyOnLoad (instance);
+		DontDestroyOnLoad (Instance);
 	}
 
 	#region IWebAPI implementation
@@ -244,7 +240,7 @@ public class WebAPIManager : MonoBehaviour, IWebAPI {
 	public int GetHighscore (int levelIndex)
 	{
 		if (authData == null)
-			return 400;
+			return -401;
 		
 		try
 		{
@@ -285,7 +281,7 @@ public class WebAPIManager : MonoBehaviour, IWebAPI {
 	public int PostHighscore (int highscore, int levelIndex)
 	{
 		if (authData == null)
-			return 400;
+			return 401;
 
 		try
 		{

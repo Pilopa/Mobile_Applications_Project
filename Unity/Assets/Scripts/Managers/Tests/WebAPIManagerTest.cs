@@ -28,11 +28,11 @@ public class WebAPIManagerTest : MonoBehaviour {
 		loginResult = manager.Login ("test", "1337");
 		Debug.Log ("Login: " + loginResult);
 
-		postHighscoreResult = manager.PostHighscore (100, 0) == 200;
-		Debug.Log ("PostHighscore(100, 0): " + postHighscoreResult);
+		postHighscoreResult = manager.PostHighscore (100, 1) == 200;
+		Debug.Log ("PostHighscore(100, 1): " + postHighscoreResult);
 
-		int getHighScoreResult = manager.GetHighscore (0);
-		Debug.Log ("GetHighscore(0): " + getHighScoreResult);
+		int getHighScoreResult = manager.GetHighscore (1);
+		Debug.Log ("GetHighscore(1): " + getHighScoreResult);
 
 		// Register
 		int registerResult = manager.Register("test", "1337");

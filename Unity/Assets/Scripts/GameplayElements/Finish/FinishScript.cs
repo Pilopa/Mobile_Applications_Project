@@ -15,13 +15,11 @@ public class FinishScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (finished && !paused)
-        {
-            ui.Finish();
-            ui.PauseAndResumeGame();
-            paused = true;
-            return;
-        }
+        //if (finished && !paused)
+        //{
+            
+        //    return;
+        //}
 
         bool allAtFinish = true;
         for (int i=0; i< marbles.Length; i++)
@@ -30,6 +28,9 @@ public class FinishScript : MonoBehaviour {
                 allAtFinish = false;   
         }
         if (allAtFinish)
-            finished = true;
+        {
+            ui.Finish();
+
+        }
 	}
 }
