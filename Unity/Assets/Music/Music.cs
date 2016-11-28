@@ -1,11 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 
-
-public class Sound : MonoBehaviour {
-	
-	public AudioClip button_click;
+public class Music : MonoBehaviour {
 
 	void Awake() {		
 		DontDestroyOnLoad (this.gameObject);
@@ -14,5 +10,4 @@ public class Sound : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
-
 }

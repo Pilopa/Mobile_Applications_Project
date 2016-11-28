@@ -16,6 +16,9 @@ public class HUD_Class : MonoBehaviour {
 	private int minutes = 0, seconds = 0;
 	private Ad_Manager ads;
 
+	private AudioSource soundSource;
+	private Sound sound;
+
     [SerializeField]
     private WebAPIManager webMan;
 
@@ -32,6 +35,8 @@ public class HUD_Class : MonoBehaviour {
         if (!webMan.Login("test", "1337")) {
             Application.Quit();
         }
+		soundSource = GameObject.Find ("Sound").GetComponent<AudioSource> ();
+		sound = GameObject.Find ("Sound").GetComponent<Sound> ();
     }
 
     void OnApplicationQuit()
@@ -80,6 +85,7 @@ public class HUD_Class : MonoBehaviour {
 
 	public void PauseAndResumeGame(){
 		pause = !pause;
+		playSound (sound.button_click);
 
 		if (pause) {
 			Time.timeScale = 0;
@@ -96,12 +102,14 @@ public class HUD_Class : MonoBehaviour {
 	}
 
 	public void RestartGame(){
+		playSound (sound.button_click);
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
 		Time.timeScale = 1;	
 		pause = false;
 	}
 
 	public void QuitGame(){
+		playSound (sound.button_click);
 		ads.ShowAd ();
 		SceneManager.LoadScene (0);
 	}
@@ -126,5 +134,10 @@ public class HUD_Class : MonoBehaviour {
         webMan.PostHighscore(score, 0); //SceneManager.GetActiveScene().buildIndex - 1
         score = webMan.GetHighscore(0); //SceneManager.GetActiveScene().buildIndex - 1
         hudHighScoreText.text = score.ToString();
+	}
+
+	void playSound(AudioClip sound)
+	{
+		soundSource.PlayOneShot (sound);
 	}
 }

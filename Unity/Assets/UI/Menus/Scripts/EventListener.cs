@@ -7,21 +7,31 @@ using UnityEngine.UI;
 public class EventListener : MonoBehaviour {
 
 	public GameObject mainMenu, startMenu, optionsMenu;
+	public Toggle soundToggle, musicToggle;
+	public Slider soundSlider, musicSlider;
 
-
-	private AudioSource soundSource;
+	private AudioSource soundSource, musicSource;
 	private Sound sound;
+
 
 	// Use this for initialization
 	void Start () {
 		soundSource = GameObject.Find ("Sound").GetComponent<AudioSource> ();
+		musicSource = GameObject.Find ("Music").GetComponent<AudioSource> ();
 		sound = GameObject.Find ("Sound").GetComponent<Sound> ();
+
+		if (PlayerPrefs.HasKey ("MusicVolume"))
+			musicSource.volume = PlayerPrefs.GetFloat ("MusicVolume");
+		if (PlayerPrefs.HasKey ("MusicMute"))
+			musicSource.mute = GetBool ("MusicMute");
+		if (PlayerPrefs.HasKey ("SoundVolume"))
+			soundSource.volume = PlayerPrefs.GetFloat ("SoundVolume");
+		if (PlayerPrefs.HasKey ("SoundMute"))
+			soundSource.mute = GetBool ("SoundMute");
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+
 
 	void playSound(AudioClip sound)
 	{
@@ -45,15 +55,7 @@ public class EventListener : MonoBehaviour {
 	{
 		playSound (sound.button_click);
 		this.mainMenu.SetActive (true);
-
-		if (this.optionsMenu.activeSelf)
-		{			
-			this.optionsMenu.SetActive (false);
-		}
-		if (this.startMenu.activeSelf)
-		{
-			this.startMenu.SetActive (false);
-		}
+		this.startMenu.SetActive (false);
 	}
 
 	public void EnableStartMenu()
@@ -63,10 +65,72 @@ public class EventListener : MonoBehaviour {
 		this.mainMenu.SetActive (false);
 	}
 
+
+	public void SaveSettings()
+	{
+		playSound (sound.button_click);
+		this.mainMenu.SetActive (true);
+		this.optionsMenu.SetActive (false);
+		PlayerPrefs.SetFloat ("MusicVolume", musicSource.volume);
+		SetBool ("MusicMute", musicSource.mute);
+		PlayerPrefs.SetFloat ("SoundVolume", soundSource.volume);
+		SetBool ("SoundMute", soundSource.mute);
+
+	}
+
 	public void EnableOptionsMenu()
 	{
 		playSound (sound.button_click);
 		this.optionsMenu.SetActive (true);
 		this.mainMenu.SetActive (false);
+		soundToggle = GameObject.Find ("SoundToggle").GetComponent<Toggle> () as Toggle;
+		soundSlider = GameObject.Find ("SoundSlider").GetComponent<Slider> () as Slider;
+		musicToggle =GameObject.Find ("MusicToggle").GetComponent<Toggle> () as Toggle;
+		musicSlider = GameObject.Find ("MusicSlider").GetComponent<Slider> () as Slider;
+
+		soundToggle.isOn = !soundSource.mute;
+		soundSlider.value = soundSource.volume;
+		musicToggle.isOn = !musicSource.mute;
+		musicSlider.value = musicSource.volume;
+
+
+		soundToggle.onValueChanged.AddListener (delegate {
+			SoundValueChangeCheck();
+		});
+		soundSlider.onValueChanged.AddListener (delegate {
+			SoundVolumeValueChangeCheck();
+		});
+
+		musicToggle.onValueChanged.AddListener (delegate {
+			MusicValueChangeCheck();
+		});
+		musicSlider.onValueChanged.AddListener (delegate {
+			MusicVolumeValueChangeCheck();
+		});
+
 	}
+
+	public void SoundValueChangeCheck(){
+		soundSource.mute = !soundToggle.isOn;
+	}	
+	public void SoundVolumeValueChangeCheck(){
+		soundSource.volume = soundSlider.value;
+	}
+
+	public void MusicValueChangeCheck(){
+		musicSource.mute = !musicToggle.isOn;
+	}
+	public void MusicVolumeValueChangeCheck(){
+		musicSource.volume = musicSlider.value;
+	}
+
+	public static void SetBool(string name, bool value){
+		PlayerPrefs.SetInt (name, value ? 1 : 0);
+	}
+
+	public static bool GetBool(string name){		
+		return PlayerPrefs.GetInt (name) == 1 ? true : false;
+	}
+
+
 }
