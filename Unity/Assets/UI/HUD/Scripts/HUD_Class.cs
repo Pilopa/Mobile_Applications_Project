@@ -102,7 +102,7 @@ public class HUD_Class : MonoBehaviour {
 	}
 
 	public void RestartGame(){
-		playSound (sound.button_click);
+		//playSound (sound.button_click);
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
 		Time.timeScale = 1;	
 		pause = false;
