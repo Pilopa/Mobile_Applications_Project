@@ -9,58 +9,58 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1000010134373518}
+  m_RootGameObject: {fileID: 1000012565277464}
   m_IsPrefabParent: 1
---- !u!1 &1000010134373518
+--- !u!1 &1000012565277464
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 4000011069793386}
-  - 65: {fileID: 65000012104885126}
-  - 114: {fileID: 114000013339353200}
-  m_Layer: 0
-  m_Name: Finsih
+  - 4: {fileID: 4000012291634936}
+  - 65: {fileID: 65000010836658164}
+  - 114: {fileID: 114000012890654700}
+  m_Layer: 5
+  m_Name: MultipleFinish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4000011069793386
+--- !u!4 &4000012291634936
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010134373518}
+  m_GameObject: {fileID: 1000012565277464}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.44, y: 1, z: -55.02}
-  m_LocalScale: {x: 3, y: 1, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!65 &65000012104885126
+--- !u!65 &65000010836658164
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010134373518}
+  m_GameObject: {fileID: 1000012565277464}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114000013339353200
+--- !u!114 &114000012890654700
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010134373518}
+  m_GameObject: {fileID: 1000012565277464}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 962ffbd2149871d40a333d373c110d40, type: 3}
+  m_Script: {fileID: 11500000, guid: 48acff16c54692040a963e0898d2c556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

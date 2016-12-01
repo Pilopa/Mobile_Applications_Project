@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class FinishScript : MonoBehaviour {
+public class OneFinishScript : MonoBehaviour {
+
     private GameObject[] marbles;
     private Collider col;
     private bool finished = false;
