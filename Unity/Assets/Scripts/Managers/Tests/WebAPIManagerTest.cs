@@ -40,11 +40,13 @@ public class WebAPIManagerTest : MonoBehaviour {
 		Debug.Log ("Register: " + registerResult);
 
 		// Ranking
-		var rankings = manager.GetRanking(1, 1);
-		bool rankingResult = rankings != null;
-		Debug.Log ("Ranking: " + rankingResult);
-		foreach (Dictionary<string, string> highscore in rankings) {
-			Debug.Log (highscore["username"] + ": " + highscore["value"]);
+		for (int i = 0; i < 5; i++) {
+			var rankings = manager.GetRanking (1, 1);
+			bool rankingResult = rankings != null;
+			Debug.Log ("Ranking (" + i + "): " + rankingResult);
+			foreach (Dictionary<string, string> highscore in rankings) {
+				Debug.Log (highscore ["username"] + ": " + highscore ["value"]);
+			}
 		}
 
 	}

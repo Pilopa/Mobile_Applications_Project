@@ -9,7 +9,7 @@ public class RubberWall : MonoBehaviour {
 	void OnCollisionEnter(Collision collision)
 	{
 		if (collision.gameObject.tag == "Marble") {
-			collision.rigidbody.AddForce (-transform.forward * speed);
+			collision.rigidbody.AddForce (-collision.contacts[0].normal * speed);
 		}
 
 	}
