@@ -29,9 +29,6 @@ public class EventListener : MonoBehaviour {
 		if (PlayerPrefs.HasKey ("SoundMute"))
 			soundSource.mute = GetBool ("SoundMute");
 	}
-	
-
-
 
 	void playSound(AudioClip sound)
 	{
@@ -71,6 +68,7 @@ public class EventListener : MonoBehaviour {
 		playSound (sound.button_click);
 		this.mainMenu.SetActive (true);
 		this.optionsMenu.SetActive (false);
+
 		PlayerPrefs.SetFloat ("MusicVolume", musicSource.volume);
 		SetBool ("MusicMute", musicSource.mute);
 		PlayerPrefs.SetFloat ("SoundVolume", soundSource.volume);
