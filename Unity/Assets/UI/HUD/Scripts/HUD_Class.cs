@@ -10,8 +10,10 @@ public class HUD_Class : MonoBehaviour {
 
 	public GameObject hud, pauseMenu, failMenu, finishMenu;
 	public Text hudScoreText, hudHighScoreText, hudTimeText, pauseScoreText, pauseTimeText, failScoreText, failTimeText, scoreText, timeText;
+    public float Score { get; set; }
 
-	private float score, time = 0;
+
+	private float time = 0;
 	private float multiplier = 10;
 	private int minutes = 0, seconds = 0;
 	private Ad_Manager ads;
@@ -26,8 +28,8 @@ public class HUD_Class : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Time.timeScale = 1;
-		score = 5000;
-		hudScoreText.text = score.ToString();
+        Score = 5000;
+		hudScoreText.text = Score.ToString();
 		hudTimeText.text = minutes + ":" + seconds;
 		pause = false;
 		ads = GameObject.Find ("Ad_Manager").GetComponent<Ad_Manager> ();
@@ -55,10 +57,10 @@ public class HUD_Class : MonoBehaviour {
 
 	private void SetScore(float newScore)
 	{
-		if (score >= 0) {
-			score -= newScore;
-			score = (int)score;
-			hudScoreText.text = score.ToString ();
+		if (Score >= 0) {
+            Score -= newScore;
+            Score = (int)Score;
+			hudScoreText.text = Score.ToString ();
 		}
 	}
 
