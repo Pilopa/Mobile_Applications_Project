@@ -9,11 +9,11 @@ public class DestroyWall : MonoBehaviour {
 	{		
 		if (collision.gameObject.tag == "Marble") {
 			if (collision.impactForceSum.x > withstandingForce
-			| collision.impactForceSum.y > withstandingForce
-			| collision.impactForceSum.z > withstandingForce
-			| collision.impactForceSum.y < -withstandingForce	
-			| collision.impactForceSum.x < -withstandingForce
-			| collision.impactForceSum.z < -withstandingForce) 
+			|| collision.impactForceSum.y > withstandingForce
+			|| collision.impactForceSum.z > withstandingForce
+			|| collision.impactForceSum.y < -withstandingForce	
+			|| collision.impactForceSum.x < -withstandingForce
+			|| collision.impactForceSum.z < -withstandingForce) 
 			{
                	this.GetComponent<Renderer> ().enabled = false;
 				this.GetComponent<Collider> ().enabled = false;			
