@@ -48,6 +48,24 @@ public class EventListener : MonoBehaviour {
         SceneManager.LoadScene(2);
     }
 
+    public void StartLevel03()
+    {
+        playSound(sound.button_click);
+        SceneManager.LoadScene(3);
+    }
+
+    public void StartLevel04()
+    {
+        playSound(sound.button_click);
+        SceneManager.LoadScene(4);
+    }
+
+    public void StartLevel05()
+    {
+        playSound(sound.button_click);
+        SceneManager.LoadScene(5);
+    }
+
     public void EnableMainMenu()
 	{
 		playSound (sound.button_click);
