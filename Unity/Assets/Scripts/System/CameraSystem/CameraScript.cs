@@ -2,11 +2,11 @@
 
 public class CameraScript : MonoBehaviour {
 
-    ///<summary> MarbleCount, not needed at the moment </summary>
-    public short MarbleCount { get; private set; }
-    /// <summary> Stores all marbles in the level. </summary> Used for setting position of the camera.
+    /// <summary>Minimum distance from the board to the camera </summary>
     public float minHeight = 15.0f;
 
+    //Used for setting position of the camera.
+    /// <summary> Stores all marbles in the level. </summary>
     private GameObject[] marbles;
     private GameObject board;
     private float sqrtOf3;
@@ -14,7 +14,6 @@ public class CameraScript : MonoBehaviour {
     // Use this for initialization
 	void Start () {
         marbles = GameObject.FindGameObjectsWithTag("Marble");
-        MarbleCount = (short) marbles.Length;
         board = GameObject.Find("Board");
 
         sqrtOf3 = Mathf.Sqrt(3.0f);

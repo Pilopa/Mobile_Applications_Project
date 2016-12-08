@@ -18,8 +18,8 @@ public class HUD_Class : MonoBehaviour {
 	private int minutes = 0, seconds = 0;
 	private Ad_Manager ads;
 
-	//private AudioSource soundSource;
-	//private Sound sound;
+    private AudioSource soundSource;
+    private Sound sound;
 
     [SerializeField]
     private WebAPIManager webMan;
@@ -133,13 +133,13 @@ public class HUD_Class : MonoBehaviour {
 		finishMenu.SetActive (true);
 		hud.SetActive (false);
         int score = Int32.Parse(hudScoreText.text);
-        webMan.PostHighscore(score, 0); //SceneManager.GetActiveScene().buildIndex - 1
-        score = webMan.GetHighscore(0); //SceneManager.GetActiveScene().buildIndex - 1
+        webMan.PostHighscore(score, SceneManager.GetActiveScene().buildIndex - 1); //SceneManager.GetActiveScene().buildIndex - 1
+        score = webMan.GetHighscore(SceneManager.GetActiveScene().buildIndex - 1); //SceneManager.GetActiveScene().buildIndex - 1
         hudHighScoreText.text = score.ToString();
 	}
 
-//	void playSound(AudioClip sound)
-//	{
-//		soundSource.PlayOneShot (sound);
-//	}
+    void playSound(AudioClip sound)
+    {
+        soundSource.PlayOneShot(sound);
+    }
 }
