@@ -11,8 +11,8 @@ public class DestroyWall : MonoBehaviour {
 			if (collision.impactForceSum.x > withstandingForce
 			|| collision.impactForceSum.y > withstandingForce
 			|| collision.impactForceSum.z > withstandingForce
-			|| collision.impactForceSum.y < -withstandingForce	
-			|| collision.impactForceSum.x < -withstandingForce
+			|| collision.impactForceSum.x < -withstandingForce	
+			|| collision.impactForceSum.y < -withstandingForce
 			|| collision.impactForceSum.z < -withstandingForce) 
 			{
                	this.GetComponent<Renderer> ().enabled = false;
