@@ -1,5 +1,10 @@
 <?php namespace App\Middleware;
 
+/**
+ * Tracking middleware. Stores the time of the latest successful request in the database.
+ *
+ * @author Konstantin Schaper
+ */
 class RequestTimingMiddleware {
 
 	private $container;

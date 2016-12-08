@@ -1,5 +1,11 @@
 <?php namespace App\Middleware;
 
+/**
+ * Forces https on the client.<br>
+ * Not currently used in development builds.
+ *
+ * @author Konstantin Schaper
+ */
 class HTTPSMiddleware extends Slim\Middleware {
 
 	public function call() {

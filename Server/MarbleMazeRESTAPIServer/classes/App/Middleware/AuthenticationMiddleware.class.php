@@ -1,5 +1,10 @@
 <?php namespace App\Middleware;
 
+/**
+ * Authenticates requests by validating the basic authentication header.
+ *
+ * @author Konstantin Schaper
+ */
 class AuthenticationMiddleware {
 
 	private $container;
