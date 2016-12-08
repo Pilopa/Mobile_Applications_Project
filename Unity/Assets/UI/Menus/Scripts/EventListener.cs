@@ -66,6 +66,12 @@ public class EventListener : MonoBehaviour {
         SceneManager.LoadScene(5);
     }
 
+    public void StartLevel06()
+    {
+        playSound(sound.button_click);
+        SceneManager.LoadScene(6);
+    }
+
     public void EnableMainMenu()
 	{
 		playSound (sound.button_click);

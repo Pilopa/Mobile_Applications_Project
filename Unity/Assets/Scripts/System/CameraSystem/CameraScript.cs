@@ -8,13 +8,11 @@ public class CameraScript : MonoBehaviour {
     //Used for setting position of the camera.
     /// <summary> Stores all marbles in the level. </summary>
     private GameObject[] marbles;
-    private GameObject board;
     private float sqrtOf3;
 
     // Use this for initialization
 	void Start () {
         marbles = GameObject.FindGameObjectsWithTag("Marble");
-        board = GameObject.Find("Board");
 
         sqrtOf3 = Mathf.Sqrt(3.0f);
 	}

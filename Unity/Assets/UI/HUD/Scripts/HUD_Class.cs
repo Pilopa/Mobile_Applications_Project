@@ -37,8 +37,8 @@ public class HUD_Class : MonoBehaviour {
         if (!webMan.Login("test", "1337")) {
             Application.Quit();
         }
-		//soundSource = GameObject.Find ("Sound").GetComponent<AudioSource> ();
-		//sound = GameObject.Find ("Sound").GetComponent<Sound> ();
+		soundSource = GameObject.Find ("Sound").GetComponent<AudioSource> ();
+		sound = GameObject.Find ("Sound").GetComponent<Sound> ();
     }
 
     void OnApplicationQuit()
@@ -87,7 +87,7 @@ public class HUD_Class : MonoBehaviour {
 
 	public void PauseAndResumeGame(){
 		pause = !pause;
-		//playSound (sound.button_click);
+		playSound (sound.button_click);
 
 		if (pause) {
 			Time.timeScale = 0;
@@ -104,14 +104,14 @@ public class HUD_Class : MonoBehaviour {
 	}
 
 	public void RestartGame(){
-		//playSound (sound.button_click);
+		playSound (sound.button_click);
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
 		Time.timeScale = 1;	
 		pause = false;
 	}
 
 	public void QuitGame(){
-		//playSound (sound.button_click);
+		playSound (sound.button_click);
 		ads.ShowAd ();
 		SceneManager.LoadScene (0);
 	}
