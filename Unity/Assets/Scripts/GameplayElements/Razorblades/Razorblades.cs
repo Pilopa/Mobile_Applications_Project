@@ -4,6 +4,7 @@ using System.Collections;
 
 public class Razorblades : MonoBehaviour
 {
+    public bool canKill = false;
 
     private GameObject[] marbles;
     private Collider col;
@@ -24,25 +25,19 @@ public class Razorblades : MonoBehaviour
         // transform.Rotate(0, Time.deltaTime*90f, 0, Space.Self);
         //transform.Rotate(0, Time.deltaTime, 0, Space.World);
 
-        transform.Rotate(new Vector3(Time.deltaTime * 180, 0, 0));
-
-        if (col.tag == "Marble")
-        {
-            ui.Fail();
-            return;
-        }
-
+        //transform.Rotate(new Vector3(Time.deltaTime * 180, 0, 0));
+        transform.Rotate(0, 20 * Time.deltaTime, 0);
     }
 
 
-    private void OnTriggerEnter(Collider col)
+    void OnCollisionEnter(Collision collision)
     {
-        if (col.tag == "Marble")
-        {
-            ui.Fail();
-            return;
+        if(canKill)
+        { 
+            if (collision.gameObject.tag == "Marble")
+            {
+                ui.Fail();
+            }
         }
     }
-
-
 }
